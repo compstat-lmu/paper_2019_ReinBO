@@ -7,7 +7,7 @@ Currently, the codes which could reproduce the experiments in the paper lies in 
 
 # To run the experiments
 
-- install the required packages
+- install the required packages through benchmark/install_depend.R
 - learn how to use the R cran package batchtools for large scale benchmark study
 - in folder benchmark, execute main.R, then submit jobs according to "batchtools" API
 - There are in total 600 jobs
