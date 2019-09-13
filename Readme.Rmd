@@ -1,26 +1,44 @@
----
-title: "Poster_demo"
-author: "Jiali Lin"
-date: "9/12/2019"
-output:
-  pdf_document: default
----
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Introduction
-**Reinbo** is an AutoML package in R that optimizes machine learning pipeline with Bayesian Optimization embedded Reinforcement Learning.
+**Reinbo** is an AutoML solution in R that optimizes machine learning pipeline with Bayesian Optimization embedded Reinforcement Learning.
 
-## Installation
-* Clone or download this repository 
+Read our ECML Auto Data Science workshop paper for more information.
 
-* Open **reinbo.Rproj** with RStudio
+ReinBo: Machine Learning pipeline search and configuration with Bayesian Optimization embedded Reinforcement Learning, Xudong Sun and Jiali Lin and Bernd Bischl, arxiv preprint, https://arxiv.org/abs/1904.05381, 2019
 
-* Click **build** -> **Install and Restart** to install ReinBo package
+For citation, see reinbo_citation.bib in this repository.
 
-## Using ReinBo
+# Reproduce the benchmark experiments
+
+The codes to reproduce the experiments in the paper lies in the directory "benchmark". 
+
+- install the required packages through benchmark/install_depend.R
+- learn how to use the R cran package batchtools for large scale benchmark study
+- in folder benchmark, execute main.R, then submit jobs according to "batchtools" API
+- There are in total 600 jobs
+
+
+## Installation of the Package
+
+We also have an R package developed, to install, first you should have the rlR package ready
+
+install rlR through
+```{r eval = F}
+devtools::install_github("smilesun/rlR")
+```
+
+read the instructions about rlR to make sure it works on your computer.
+
+afterwards,
+
+```{r eval = F}
+devtools::install_github("compstat-lmu/paper_2019_ReinBo")
+```
+
+## Using ReinBo Package
 Load package to library and now ReinBo is ready for you to optimize a pipeline.
 ```{r eval = FALSE}
 library(ReinBo)
@@ -28,7 +46,7 @@ best_model = reinbo(task = mlrTask, budget = 1000L, train_set = train_set, custo
 ```
 - **task**: the task must be a **mlr task** (currently only classification task is accepted.)
 - **budget**: maximum number of pipelines to evaluate
-- **train_set**: data set index used for pipeline optimization
+- **train_set**: optimization data set index vector
 - **custom_operators**: set **Null** to use all default operators for pipeline
 
 A typical ML pipline consists of 3 stages: preprocessing, filtering and classification. Below is a list of the current built-in operators at each stage that come with ReinBo:
@@ -64,9 +82,4 @@ print(best_model$mmodel)
 print(best_model$mmodel)
 ```
 
-**y** in the result is mmce (mean mis-classification error) of the best model.
-
-
-
-
-
+**y** in the result is the negative mmce (mean mis-classification error) of the best model.
