@@ -1,24 +1,7 @@
-# Hello, world!
-#
-# This is an example function named 'hello' 
-# which prints 'Hello, world!'.
-#
-# You can learn more about package authoring with RStudio at:
-#
-#   http://r-pkgs.had.co.nz/
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Build and Reload Package:  'Ctrl + Shift + B'
-#   Check Package:             'Ctrl + Shift + E'
-#   Test Package:              'Ctrl + Shift + T'
-
-hello <- function() {
-  print("Hello, world!")
-}
-
+flag_debug = F
+task_ids = 37
+if (!flag_debug) task_ids = c(14, 23, 37, 53, 3917, 9946, 9952, 9978, 146817, 146820)
 getGconf = function() {
-  flag_debug = T
   conf_common =  list(
       NCVOuterIter = 5L,
       NCVInnerIter = 5L,
@@ -41,3 +24,29 @@ getGconf = function() {
   if (flag_debug) return(c(conf_debug, conf_common))
   return(c(conf_full, conf_common))
 }
+
+resources_light = list(
+  walltime = 60L*60*8,  
+  memory = 1024L*2,
+  ntasks = 1L,
+  ncpus = 1L,
+  nodes = 1L,
+  clusters = "serial")
+
+resources_bigmem = list(
+  walltime = 60L*60*8,  
+  memory = 1024L*4,
+  ntasks = 1L,
+  ncpus = 1L,
+  nodes = 1L,
+  clusters = "serial")
+
+
+
+resources = list(
+  walltime = 60L*60*12,  
+  memory = 1024L*2,
+  ntasks = 1L,
+  ncpus = 1L,
+  nodes = 1L,
+  clusters = "serial")
