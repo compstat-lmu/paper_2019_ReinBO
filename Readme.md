@@ -22,7 +22,8 @@ The codes to reproduce the experiments in the paper lies in the directory "bench
 We also have an R package developed, to install, first you should have the rlR package ready
 
 install rlR through
-```{r eval = F}
+
+```r
 devtools::install_github("smilesun/rlR")
 ```
 
@@ -30,13 +31,15 @@ read the instructions about rlR to make sure it works on your computer.
 
 afterwards,
 
-```{r eval = F}
+
+```r
 devtools::install_github("compstat-lmu/paper_2019_ReinBo")
 ```
 
 ## Using ReinBo Package
 Load package to library and now ReinBo is ready for you to optimize a pipeline.
-```{r eval = FALSE}
+
+```r
 library(ReinBo)
 best_model = reinbo(task = mlrTask, budget = 1000L, train_set = train_set, custom_operators = NULL)
 ```
@@ -56,14 +59,16 @@ A typical ML pipline consists of 3 stages: preprocessing, filtering and classifi
 where "NA" indicates that no operator would be taken at that stage.
 
 Users can also select a subset of operators by setting e.g.:
-```{r}
+
+```r
 custom_operators = list(preprocess = c("cpoScale()", "cpoSpatialSign()", "NA"),
                         filter = NULL, # using all filtering operators
                         classifier = c("classif.kknn", "classif.naiveBayes"))
 ```
 
 ## Example
-```{r message=FALSE, warning=FALSE, results='hide'}
+
+```r
 library(ReinBo)
 library(mlrCPO)
 library(OpenML)
@@ -74,8 +79,12 @@ test_set = split$test.inds[[1]]
 best_model = reinbo(task = task, budget = 100L, train_set = train_set, custom_operators = NULL)
 print(best_model$mmodel)
 ```
-```{r echo=FALSE}
-print(best_model$mmodel)
+
+```
+##                                                  Model        C     sigma
+## 13 cpoScale()\tcpoFilterUnivariate(perc)\tclassif.ksvm 6.976259 -7.312171
+##         perc          y
+## 13 0.5984765 -0.2304947
 ```
 
 **y** in the result is the negative mmce (mean mis-classification error) of the best model.
