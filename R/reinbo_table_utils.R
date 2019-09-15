@@ -1,6 +1,5 @@
-#source("reinbo_table_reinbo.R")
 # Get list of operators:
-#' @example  g_getOperatorList(NULL)
+# @example  g_getOperatorList(NULL)
 g_getOperatorList = function(custom_operators) {
   default_operators = list(
     preprocess = c("cpoScale()", "cpoScale(scale = FALSE)", "cpoScale(center = FALSE)", "cpoSpatialSign()", "NA"),

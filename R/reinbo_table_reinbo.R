@@ -1,8 +1,11 @@
 #' @title reinbo
 #' @description
-#' automatic machine learning
-#' @param task an mlr task
-#' @return best model.
+#' automatic machine learning with bayesian optimization embedded reinforcement learning
+#' @param task an mlr task, see documentations of mlr on how to construct an mlr task
+#' @param custom_operators default to NULL, should be specified in a way like list(preprocess = c("cpoScale()", "cpoSpatialSign()", "NA"), filter = NULL, # using all filtering operators, classifier = c("classif.kknn", "classif.naiveBayes")), where "NA" refers to No operation at each stage, but not allowed at the "classifier" stage
+#' @param budget how many pipelines to be evaluated
+#' @param train_set a vector of indices of the input task used for optimization of pipelines
+#' @return best model, best_model$mmodel is the pipeline found, together with the best hyper-parameters, best_model$y is the corresponding negative mmce (mean misclassification error)
 #' @export
 reinbo = function(task, custom_operators, budget, train_set) {
   ## Parameters for RL environment:

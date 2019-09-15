@@ -20,7 +20,7 @@ lock_eval.reinbo.table = function(task, measure, train_set, test_set, best_model
 
 
 # Reinforcement learning part:
-#' @param ctrl pipeline configuration
+# param ctrl pipeline configuration
 runQTable <- function(task, budget, measure, instance, init_val, conf, ctrl) {
   env = Q_table_Env$new(task, budget, measure, instance, ctrl)
   agent = initAgent(name = "AgentTable", env = env, conf = conf, q_init = init_val,
@@ -32,7 +32,7 @@ runQTable <- function(task, budget, measure, instance, init_val, conf, ctrl) {
 }
 
 # MBO function: hyperparameter tuning
-#' @param model character vector
+# @param model character vector
 mbo_fun = function(task, model, design, measure, cv_instance, ctrl) {
   ps = g_getParamSetFun(model)  # get parameter set from string representation of a model
   object = makeSingleObjectiveFunction(
@@ -81,8 +81,12 @@ genLearnerForBestModel = function(task, best_model, measure){
   param_set = as.list(best_model)
   param_set$Model = NULL
   param_set$y = NULL
-  if (!is.null(param_set$C)) { param_set$C = 2^param_set$C }
-  if (!is.null(param_set$sigma)) { param_set$sigma = 2^param_set$sigma }
+  if (!is.null(param_set$C)) {
+    param_set$C = 2^param_set$C
+  }
+  if (!is.null(param_set$sigma)) {
+    param_set$sigma = 2^param_set$sigma
+  }
   lrn = genLearner.reinbo(task, model, param_set, measure)
   return(lrn)
 }
@@ -100,8 +104,12 @@ genLearner.reinbo = function(task, model, param_set, measure){
   ps.learner$rank = NULL
   if (model[3] == "classif.ranger") {
     p1 = p
-    if (!is.null(param_set$perc)) {p1 = max(1, round(p*param_set$perc))}
-    if (!is.null(param_set$rank)) {p1 = max(1, round(p*param_set$rank))}
+    if (!is.null(param_set$perc)) {
+      p1 = max(1, round(p * param_set$perc))
+    }
+    if (!is.null(param_set$rank)) {
+      p1 = max(1, round(p * param_set$rank))
+    }
     ps.learner$mtry = max(1, as.integer(p1*param_set$mtry))
   }
   lrn = eval(parse(text = lrn))
